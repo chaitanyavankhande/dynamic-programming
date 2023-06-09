@@ -1,8 +1,8 @@
 // Link:  https://www.codingninjas.com/codestudio/problems/count-ways-to-reach-nth-stairs_798650 
 
 //recursion solution
-//TC: 2^n
-
+//TC: O(2^n)
+// SC: O(1)
 
 #include <bits/stdc++.h> 
 using namespace std;
