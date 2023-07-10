@@ -1,5 +1,6 @@
 
 // https://leetcode.com/problems/unique-paths-iii/description/
+// https://www.codingninjas.com/studio/problems/unique-robot-paths_3657116
 class Solution {
 
     int solve(int i, int j, vector<vector<int>>&mat, vector<vector<bool>>&visited, int &emptySquares) {
