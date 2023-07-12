@@ -5,6 +5,32 @@
 
 // https://leetcode.com/problems/target-sum/
 
+// solution 3: memoization
+class Solution {
+
+int solve(int n, vector<int>&nums, int currentSum, int allSum, int target, vector<vector<int>>&dp) {
+    
+    if(n == 0) {
+        if( (allSum - currentSum) - currentSum == target ) return 1; //nums=2,3,5; target=0;
+        return 0;
+    }
+    if(dp[n][currentSum] != -1) return dp[n][currentSum];
+    int pick = solve(n-1, nums, currentSum + nums[n-1], allSum, target, dp);
+    int notPick = solve(n-1, nums, currentSum, allSum, target, dp);
+    return dp[n][currentSum] = pick + notPick;
+}
+
+public:
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int n = nums.size();
+        int allElementsSum = 0;
+        for(int i=0; i<n; i++) allElementsSum += nums[i];
+
+        vector<vector<int>> dp(n+1, vector<int>(allElementsSum+1, -1));
+
+        return solve(n, nums, 0, allElementsSum, target, dp);
+    }
+};
 
 //solution 4: recursion
 class Solution {
