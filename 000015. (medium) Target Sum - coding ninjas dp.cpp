@@ -5,6 +5,35 @@
 
 // https://leetcode.com/problems/target-sum/
 
+//solution 1: tabulation space optimization
+
+
+//solution 2: tabulation
+class Solution {
+
+public:
+    int findTargetSumWays(vector<int>& nums, int target) {
+        int n = nums.size();
+        int allSum = 0;
+        for(int i=0; i<n; i++) allSum += nums[i];
+
+        vector<vector<int>> tb(n+1, vector<int>(allSum+1, 0));
+        for(int j=0; j<=allSum; j++) {
+            if((allSum - j) - j == target) tb[0][j] = 1;
+        }
+
+        for(int i=1; i<=n; i++) {
+            for(int j=0; j<=allSum; j++) {
+                int pick = 0;
+                if(j+nums[i-1] <= allSum) pick = tb[i-1][j + nums[i-1]];
+                int notPick = tb[i-1][j];
+                tb[i][j] = pick + notPick;
+            }
+        }
+        return tb[n][0];
+    }
+};
+
 // solution 3: memoization
 class Solution {
 
