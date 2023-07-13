@@ -11,7 +11,7 @@ int findWays(vector<int>& arr, int target)
     previous[0] = 1;
     for(int i=1; i<=n; i++) {
         current[0] = 1;
-        for(int j=1; j<=target; j++) {
+        for(int j=0; j<=target; j++) {
             int pick = 0;
             if(j >= arr[i-1]) pick = previous[j - arr[i-1]];
             int notPick = previous[j];
@@ -32,7 +32,7 @@ int findWays(vector<int>& arr, int target)
     tb[0][0] = 1;
     for(int i=1; i<=n; i++) {
         tb[i][0] = 1;
-        for(int j=1; j<=target; j++) {
+        for(int j=0; j<=target; j++) {
             int pick = 0;
             if(j >= arr[i-1]) pick = tb[i-1][j - arr[i-1]];
             int notPick = tb[i-1][j];
@@ -46,8 +46,7 @@ int findWays(vector<int>& arr, int target)
 /* solution 3: memoization */
 int solve(vector<int>&arr, int target, int n, vector<vector<int>>&dp) {
     
-    if(target == 0) return 1;
-    if(n == 0) return 0;
+    if(n == 0) return target==0;
     if(dp[n][target] != -1) return dp[n][target];
     int pick = 0;
     if(target >= arr[n-1]) pick = solve(arr, target - arr[n-1], n-1, dp);
@@ -68,8 +67,7 @@ int findWays(vector<int>& arr, int k)
 /* solution 4: recursion */
 int solve(vector<int>&arr, int target, int n) {
     
-    if(target == 0) return 1;
-    if(n == 0) return 0;
+    if(n == 0) return target==0;
     int pick = 0;
     if(target >= arr[n-1]) pick = solve(arr, target - arr[n-1], n-1);
     int notPick = solve(arr, target, n-1);
@@ -82,4 +80,3 @@ int findWays(vector<int>& arr, int k)
     int n = arr.size();
     return solve(arr, k, n);
 }
-
