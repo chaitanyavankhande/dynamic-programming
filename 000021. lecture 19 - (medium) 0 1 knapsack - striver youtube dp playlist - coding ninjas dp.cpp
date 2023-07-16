@@ -4,6 +4,41 @@
 
 #include <bits/stdc++.h> 
 
+/* solution 1: tabulation space optimized */
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+	// Write your code here
+	vector<int> current(maxWeight+1, 0), previous(maxWeight+1, 0);
+	for(int i=1; i<=n; i++) {
+		for(int j=0; j<=maxWeight; j++) {
+			int pick = 0;
+			if(j >= weight[i-1]) pick = value[i-1] + previous[j-weight[i-1]];
+			int notPick = previous[j];
+			current[j] = max(pick, notPick);			
+		}
+		previous = current;
+	}
+	return current[maxWeight];
+}
+
+/* solution 2: tabulation */
+int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight) 
+{
+	// Write your code here
+	vector<vector<int>>tb(n+1, vector<int>(maxWeight+1, 0));
+	for(int i=1; i<=n; i++) {
+		for(int j=0; j<=maxWeight; j++) {
+			int pick = 0;
+			if(j >= weight[i-1]) pick = value[i-1] + tb[i-1][j-weight[i-1]];
+			int notPick = tb[i-1][j];
+			tb[i][j] = max(pick, notPick);			
+		}
+	}
+	return tb[n][maxWeight];
+}
+
+
+/* solution 3: memoization */
 int solve(vector<int>&weight, vector<int>&value, int n, int maxWeight,
 vector<vector<int>>&dp) {
 	
@@ -23,7 +58,7 @@ int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight)
 }
 
 
-/* solution 4: recursion
+/* solution 4: recursion */
 int solve(vector<int>&weight, vector<int>&value, int n, int maxWeight) {
 	
 	if(n == 0) return 0;
@@ -38,4 +73,3 @@ int knapsack(vector<int> weight, vector<int> value, int n, int maxWeight)
 	// Write your code here
 	return solve(weight, value, n, maxWeight);
 }
-*/
